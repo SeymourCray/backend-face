@@ -72,11 +72,18 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       -
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H-%M-%S')"
+        id: time
+        name: Set timestamp
+        shell: python
+        run: |
+          import os
+          from time import time
+
+          with open(os.environ["GITHUB_OUTPUT"], "a+", encoding="utf-8") as output:
+              print("timestamp=%s" % int(time()), file=output)
       -
         name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: molel/${{ github.event.repository.name }}:${{ steps.date.outputs.date }}
+          tags: molel/${{ github.event.repository.name }}:${{ steps.time.outputs.timestamp }}
