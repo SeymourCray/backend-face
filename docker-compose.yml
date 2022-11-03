@@ -2,44 +2,13 @@ version: '3.8'
 
 services:
   backend-face-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: molel/backend-face:latest
     container_name: app
-    restart: on-failure
+    restart: always
     ports:
-      - "8080:80"
-    depends_on:
-      - mongodb-service
+      - "80:80"
     environment:
       - HTTP_PORT=${HTTP_PORT}
-      - MONGODB_DATABASE_NAME=${MONGODB_DATABASE_NAME}
-      - MONGODB_USERS_COLLECTION=${MONGODB_USERS_COLLECTION}
-      - MONGO_USER=${MONGO_USER}
-      - MONGO_PASSWORD=${MONGO_PASSWORD}
-
-  mongodb-service:
-    image: mongo:latest
-    container_name: db
-    restart: on-failure
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./.database:/data/db
-    environment:
-      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE_NAME}
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-
-  integration-test-service:
-    build:
-      context: .
-      dockerfile: integration-test/Dockerfile
-    image: integration
-    container_name: integration
-    depends_on:
-      - backend-face-service
-    environment:
       - MONGODB_DATABASE_NAME=${MONGODB_DATABASE_NAME}
       - MONGODB_USERS_COLLECTION=${MONGODB_USERS_COLLECTION}
       - MONGO_USER=${MONGO_USER}
