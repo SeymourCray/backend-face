@@ -45,9 +45,9 @@ jobs:
         name: Make migrations
         run: |
           cp .env.example .env
-          docker-compose -f docker-compose.dev.yml run -p 27017:27017 -d mongodb-service
+          docker-compose -f docker-compose.dev.yml run --name mongodb-service -p 27017:27017 -d mongodb-service
           migrate -path migrations -database "mongodb://user:password@localhost:27017/recognition?authSource=admin" up
-          docker-compose -f docker-compose.dev.yml stop mongodb-service
+          docker stop mongodb-service
       -
         name: Run integration
         run: sudo make integration
