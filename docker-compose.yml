@@ -6,7 +6,7 @@ services:
     container_name: app
     restart: always
     ports:
-      - "80:80"
+      - "80:${HTTP_PORT}"
     environment:
       - HTTP_PORT=${HTTP_PORT}
       - MONGODB_DATABASE_NAME=${MONGODB_DATABASE_NAME}
