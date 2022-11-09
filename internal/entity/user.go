@@ -1,8 +1,8 @@
 package entity
 
-const ArrayLength = 256
+const EncodingLength = 256
 
-type EncodingType [ArrayLength]float64
+type EncodingType [EncodingLength]float64
 
 type User struct {
 	ID       string       `json:"id" bson:"_id"`

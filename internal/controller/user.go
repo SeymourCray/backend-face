@@ -34,13 +34,13 @@ func (controller UserController) RecognizeUser(writer http.ResponseWriter, reque
 	}
 
 	var userGet userGetRequest
-	if err := json.NewDecoder(request.Body).Decode(&userGet); err != nil || len(userGet.Encoding) != entity.ArrayLength {
+	if err := json.NewDecoder(request.Body).Decode(&userGet); err != nil || len(userGet.Encoding) != entity.EncodingLength {
 		http.Error(writer, "wrong format", http.StatusBadRequest)
 		return
 	}
 
 	var userEncoding entity.EncodingType
-	copy(userEncoding[:entity.ArrayLength], userGet.Encoding)
+	copy(userEncoding[:entity.EncodingLength], userGet.Encoding)
 	neededUser, err := controller.useCase.RecognizeUser(entity.User{Encoding: userEncoding})
 	if err != nil {
 		http.NotFound(writer, request)

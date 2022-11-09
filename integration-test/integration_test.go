@@ -20,9 +20,9 @@ const (
 	serviceURL = "http://backend-face-service:80/recognize"
 )
 
-const ArrayLength = 256
+const EncodingLength = 256
 
-type dataType [ArrayLength]float64
+type dataType [EncodingLength]float64
 
 // HTTP POST: /recognize
 func TestRecognize(t *testing.T) {
@@ -101,7 +101,7 @@ func TestRecognize(t *testing.T) {
 }
 
 func generateData(min, max float64) (data dataType) {
-	for i := 0; i < ArrayLength; i++ {
+	for i := 0; i < EncodingLength; i++ {
 		data[i] = min + rand.Float64()*(max-min)
 	}
 	return
